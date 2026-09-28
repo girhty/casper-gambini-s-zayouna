@@ -1,0 +1,207 @@
+---
+import '../styles/global.css';
+import { brand, contact } from '../data/site';
+
+interface Props {
+  title: string;
+  description: string;
+}
+
+const { title, description } = Astro.props;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'Restaurant',
+  name: 'Casper & Gambini’s Zayouna - كاسبر اند غامبينيز زيونة',
+  description,
+  image: brand.logo,
+  url: 'https://www.instagram.com/casperandgambinisirq/',
+  telephone: contact.phone,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Dream City Mall, Al-Rubaie intersection, Zayouna',
+    addressLocality: 'Baghdad',
+    addressRegion: 'Baghdad Governorate',
+    addressCountry: 'IQ',
+  },
+  aggregateRating: {
+    '@type': 'AggregateRating',
+    ratingValue: '4.2',
+    reviewCount: '488',
+  },
+  sameAs: ['https://www.instagram.com/casperandgambinisirq/'],
+};
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#16120f" />
+    <meta name="referrer" content="no-referrer" />
+    <meta name="description" content={description} />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={brand.logo} />
+    <link rel="icon" type="image/jpeg" href={brand.logo} referrerpolicy="no-referrer" />
+    <link rel="alternate icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=DM+Sans:wght@400;500;600;700&family=Great+Vibes&family=IBM+Plex+Mono:wght@400;500;600&display=swap" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    <title>{title}</title>
+  </head>
+  <body class="bg-roast text-cream font-body antialiased">
+    <a href="#main" class="skip-link">Skip to content</a>
+
+    <div id="preloader" class="preloader" aria-hidden="true">
+      <div class="preloader-top mono">// NOW BREWING</div>
+      <img src={brand.logo} alt="" referrerpolicy="no-referrer" class="preloader-mark" />
+      <div id="load-count" class="preloader-count font-display">000</div>
+      <div class="preloader-bottom">
+        <span>CASPER &amp; GAMBINI’S<br />ZAYOUNA / BAGHDAD</span>
+        <svg viewBox="0 0 80 95" fill="none" aria-hidden="true">
+          <path d="M12 17h56l-5 67H17L12 17ZM7 9h66M24 84l-2 7h36l-2-7" stroke="currentColor" stroke-width="2"/>
+          <path class="cup-fill" d="M17 48h46l-3 33H20l-3-33Z" fill="currentColor"/>
+        </svg>
+      </div>
+    </div>
+
+    <header id="site-header" class="site-header" data-theme="dark">
+      <div class="header-inner">
+        <nav class="desktop-nav mono" aria-label="Main navigation">
+          <a href="#menu">MENU</a>
+          <a href="#story">OUR STORY</a>
+          <a href="#locations">LOCATION</a>
+          <a href="#social">INSTAGRAM</a>
+        </nav>
+        <a class="header-brand" href="#top" aria-label="Casper and Gambini’s Zayouna, back to top">
+          <img src={brand.logo} alt="" referrerpolicy="no-referrer" />
+          <span>CASPER <b>&amp;</b> GAMBINI’S<small>ZAYOUNA · BAGHDAD</small></span>
+        </a>
+        <div class="header-actions">
+          <a class="header-cta mono" href={`tel:${contact.phoneCompact}`}><span class="status-dot"></span> CALL TO BOOK <span aria-hidden="true">↗</span></a>
+          <button id="menu-toggle" class="menu-toggle" type="button" aria-label="Open menu" aria-controls="mobile-nav" aria-expanded="false"><span></span><span></span></button>
+        </div>
+      </div>
+    </header>
+
+    <nav id="mobile-nav" class="mobile-nav" aria-label="Mobile navigation" inert>
+      <a href="#menu"><span>01</span> MENU</a>
+      <a href="#story"><span>02</span> OUR STORY</a>
+      <a href="#locations"><span>03</span> LOCATION</a>
+      <a href="#social"><span>04</span> INSTAGRAM</a>
+      <a href={`tel:${contact.phoneCompact}`}><span>05</span> CALL TO BOOK ↗</a>
+    </nav>
+
+    <slot />
+
+    <script>
+      const header = document.getElementById('site-header');
+      const toggle = document.getElementById('menu-toggle') as HTMLButtonElement | null;
+      const drawer = document.getElementById('mobile-nav');
+      const preloader = document.getElementById('preloader');
+      const counter = document.getElementById('load-count');
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+      const closeMenu = () => {
+        toggle?.setAttribute('aria-expanded', 'false');
+        toggle?.setAttribute('aria-label', 'Open menu');
+        drawer?.classList.remove('is-open');
+        drawer?.setAttribute('inert', '');
+        document.body.classList.remove('menu-open');
+      };
+
+      toggle?.addEventListener('click', () => {
+        const isOpen = toggle.getAttribute('aria-expanded') === 'true';
+        if (isOpen) { closeMenu(); return; }
+        toggle.setAttribute('aria-expanded', 'true');
+        toggle.setAttribute('aria-label', 'Close menu');
+        drawer?.removeAttribute('inert');
+        drawer?.classList.add('is-open');
+        document.body.classList.add('menu-open');
+        drawer?.querySelector<HTMLElement>('a')?.focus();
+      });
+      drawer?.querySelectorAll('a').forEach((link) => link.addEventListener('click', closeMenu));
+      document.addEventListener('keydown', (event) => { if (event.key === 'Escape') closeMenu(); });
+
+      function updateTheme() {
+        if (!header) return;
+        const probe = document.elementFromPoint(window.innerWidth / 2, Math.min(105, window.innerHeight / 4));
+        const section = probe?.closest('[data-surface]') ?? document.querySelector('[data-surface]');
+        header.dataset.theme = section?.getAttribute('data-surface') === 'light' ? 'light' : 'dark';
+      }
+      window.addEventListener('scroll', updateTheme, { passive: true });
+      window.addEventListener('resize', updateTheme);
+      updateTheme();
+
+      if (preloader) {
+        if (reducedMotion) {
+          preloader.remove();
+        } else {
+          const start = performance.now();
+          const duration = 1150;
+          function tick(now: number) {
+            const progress = Math.min(1, (now - start) / duration);
+            if (counter) counter.textContent = String(Math.round(progress * 100)).padStart(3, '0');
+            preloader?.style.setProperty('--fill', `${progress * 100}%`);
+            if (progress < 1) requestAnimationFrame(tick);
+            else {
+              setTimeout(() => {
+                preloader?.classList.add('is-done');
+                setTimeout(() => preloader?.remove(), 700);
+              }, 180);
+            }
+          }
+          requestAnimationFrame(tick);
+          // Never leave content blocked if the page is backgrounded.
+          setTimeout(() => { preloader.classList.add('is-done'); setTimeout(() => preloader.remove(), 700); }, 3200);
+        }
+      }
+
+      if (!reducedMotion) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('is-visible');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.12 });
+        document.querySelectorAll('.reveal').forEach((element) => observer.observe(element));
+
+        document.querySelectorAll<HTMLElement>('[data-tilt]').forEach((card) => {
+          card.addEventListener('pointermove', (event) => {
+            if (event.pointerType === 'touch') return;
+            const rect = card.getBoundingClientRect();
+            const x = (event.clientX - rect.left) / rect.width - 0.5;
+            const y = (event.clientY - rect.top) / rect.height - 0.5;
+            card.style.transform = `perspective(900px) rotateX(${-y * 5}deg) rotateY(${x * 6}deg) translateY(-4px)`;
+          });
+          card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+        });
+
+        const receipt = document.querySelector<HTMLElement>('.receipt');
+        const order = document.getElementById('order');
+        let scheduled = false;
+        function updateReceipt() {
+          if (!receipt || !order) return;
+          const rect = order.getBoundingClientRect();
+          const range = Math.max(1, rect.height - window.innerHeight);
+          const progress = Math.max(0, Math.min(1, (window.innerHeight * 0.7 - rect.top) / (range + window.innerHeight * 0.5)));
+          receipt.style.setProperty('--feed', String(Math.round(progress * 12) / 12));
+          scheduled = false;
+        }
+        window.addEventListener('scroll', () => {
+          if (!scheduled) { requestAnimationFrame(updateReceipt); scheduled = true; }
+        }, { passive: true });
+        updateReceipt();
+      } else {
+        document.querySelectorAll('.reveal').forEach((element) => element.classList.add('is-visible'));
+        document.querySelector<HTMLElement>('.receipt')?.style.setProperty('--feed', '1');
+      }
+    </script>
+  </body>
+</html>

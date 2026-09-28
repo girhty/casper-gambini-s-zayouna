@@ -1,0 +1,198 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { brand, contact, media, posts, reviews } from '../data/site';
+
+const instagramUrl = 'https://www.instagram.com/casperandgambinisirq/';
+const gallery = [posts[2], posts[3], posts[4], posts[5], posts[8], posts[9]];
+const favorites = [
+  { number: '01', name: 'COFFEE', detail: 'A cup for every kind of day.', image: posts[5].image, alt: 'Coffee selection shared by Casper & Gambini’s Baghdad' },
+  { number: '02', name: 'SUMMER DRINKS', detail: 'A refreshing change of pace.', image: posts[3].image, alt: 'Refreshing drinks at Casper & Gambini’s' },
+  { number: '03', name: 'CHICKEN ROLL', detail: 'A savory favorite to share.', image: posts[4].image, alt: 'Chicken roll featured by Casper & Gambini’s' },
+  { number: '04', name: 'SUSHI', detail: 'Something worth staying for.', image: posts[9].image, alt: 'Sushi set featured by Casper & Gambini’s' },
+];
+const mapUrl = 'https://www.google.com/maps/search/?api=1&query=Casper%20%26%20Gambini%27s%20Zayouna%20Dream%20City%20Mall%20Baghdad';
+---
+
+<Layout
+  title="Casper & Gambini’s Zayouna | كاسبر اند غامبينيز زيونة"
+  description="Discover coffee, international flavors, and a place to linger at Casper & Gambini’s Zayouna, Dream City Mall, Baghdad. Call to book your visit."
+>
+  <main id="main">
+    <section id="top" class="hero dark-section section-shell" data-surface="dark" aria-labelledby="hero-title">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="section-inner hero-inner">
+        <div class="hero-copy">
+          <p class="eyebrow reveal">// SINCE 1996 · ZAYOUNA, BAGHDAD</p>
+          <h1 id="hero-title" class="display hero-title reveal">A WORLD<br />OF <span>FLAVORS.</span></h1>
+          <p class="hero-script font-script reveal">made for your moment</p>
+          <p class="hero-lede reveal">FROM YOUR FIRST COFFEE TO THE LAST BITE, EVERY VISIT IS A NEW JOURNEY.</p>
+          <div class="hero-links reveal">
+            <a href="#menu" class="text-link">EXPLORE THE FLAVORS <span aria-hidden="true">↗</span></a>
+            <a href={mapUrl} target="_blank" rel="noopener noreferrer" class="quiet-link">FIND US IN ZAYOUNA ↗</a>
+          </div>
+        </div>
+        <div class="hero-visual reveal" data-tilt>
+          <div class="hero-image-frame">
+            <img src={posts[5].image} alt="Coffee selection from Casper & Gambini’s Baghdad" referrerpolicy="no-referrer" fetchpriority="high" />
+          </div>
+          <div class="hero-visual-label mono"><span class="status-dot"></span> COFFEE · FOOD · GOOD COMPANY</div>
+          <span class="hero-image-index mono">01 / THE EXPERIENCE</span>
+        </div>
+        <div class="hero-bottom mono">
+          <div><span>THE PLACE</span><strong>DREAM CITY MALL<br />ZAYOUNA, BAGHDAD</strong></div>
+          <div><span>YOUR TABLE</span><strong><a href={`tel:${contact.phoneCompact}`}>{contact.phone}</a></strong></div>
+          <div><span>FOLLOW ALONG</span><strong><a href={instagramUrl} target="_blank" rel="noopener noreferrer">@CASPERANDGAMBINISIRQ ↗</a></strong></div>
+        </div>
+      </div>
+      <span class="side-marker mono" aria-hidden="true">SCROLL TO DISCOVER ↓</span>
+    </section>
+
+    <section id="menu" class="menu-section light-section section-shell" data-surface="light" aria-labelledby="menu-title">
+      <div class="watermark" aria-hidden="true">C&amp;G</div>
+      <div class="section-inner">
+        <div class="section-heading reveal">
+          <div>
+            <p class="eyebrow">// FROM OUR TABLE</p>
+            <h2 id="menu-title" class="display section-title">FAVORITES<br /><em>FOR EVERY DAY.</em></h2>
+          </div>
+          <div class="heading-aside">
+            <p>Something familiar. Something new. Always an invitation to enjoy the moment.</p>
+            <a class="text-link" href={instagramUrl} target="_blank" rel="noopener noreferrer">DISCOVER MORE ON INSTAGRAM <span aria-hidden="true">↗</span></a>
+          </div>
+        </div>
+        <div class="favorites-grid">
+          {favorites.map((item) => (
+            <article class="favorite-card reveal" data-tilt>
+              <div class="card-top mono"><span>{item.number}</span><span>CASPER &amp; GAMBINI’S ↗</span></div>
+              <div class="favorite-media"><img src={item.image} alt={item.alt} loading="lazy" referrerpolicy="no-referrer" /></div>
+              <div class="card-bottom">
+                <div><h3 class="display">{item.name}</h3><p>{item.detail}</p></div>
+                <span aria-hidden="true">↗</span>
+              </div>
+            </article>
+          ))}
+        </div>
+        <p class="menu-note mono">// A GLIMPSE OF OUR RECENT FAVORITES · ASK OUR TEAM ABOUT CURRENT AVAILABILITY</p>
+      </div>
+    </section>
+
+    <section id="locations" class="location-section light-section section-shell" data-surface="light" aria-labelledby="location-title">
+      <div class="section-inner location-layout">
+        <div class="location-intro reveal">
+          <p class="eyebrow"><span class="status-dot"></span> // COME FIND US</p>
+          <h2 id="location-title" class="display section-title">YOUR PLACE<br />IN <em>BAGHDAD.</em></h2>
+          <p>Meet us in Zayouna. Bring a friend, stay for a coffee, and see where the day takes you.</p>
+          <div class="location-details">
+            <div class="detail-block"><span class="mono">01 / ADDRESS</span><address>Dream City Mall<br />Al-Rubaie intersection, Zayouna<br />Baghdad, Iraq</address></div>
+            <div class="detail-block"><span class="mono">02 / RESERVATIONS &amp; ENQUIRIES</span><a href={`tel:${contact.phoneCompact}`}>{contact.phone} ↗</a></div>
+            <div class="detail-block"><span class="mono">03 / VISITING HOURS</span><p>Please call for today’s opening hours.</p></div>
+          </div>
+          <a class="solid-button" href={mapUrl} target="_blank" rel="noopener noreferrer">GET DIRECTIONS <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="location-art reveal">
+          <div class="dial" aria-hidden="true">
+            <span class="dial-top mono">ZAYOUNA · BAGHDAD</span>
+            <span class="dial-left mono">33°18′ N</span>
+            <span class="dial-right mono">44°26′ E</span>
+            <div class="dial-center"><img src={posts[3].image} alt="" loading="lazy" referrerpolicy="no-referrer" /></div>
+            <span class="dial-bottom mono">FIND YOUR MOMENT HERE ↗</span>
+          </div>
+          <div class="location-art-caption mono">ONE CITY. ENDLESS REASONS TO STAY.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="story" class="story-section dark-section section-shell" data-surface="dark" aria-labelledby="story-title">
+      <div class="story-glow" aria-hidden="true"></div>
+      <div class="section-inner story-inner">
+        <p class="eyebrow reveal">// THE CASPER &amp; GAMBINI’S WAY</p>
+        <h2 id="story-title" class="display story-title reveal">EVERY VISIT<br />A NEW <span>STORY.</span></h2>
+        <div class="story-image reveal"><img src={posts[8].image} alt="The atmosphere at Casper & Gambini’s Baghdad" loading="lazy" referrerpolicy="no-referrer" /></div>
+        <div class="story-bottom reveal">
+          <p class="mono">// SINCE 1996<br />YOUR GATEWAY TO A WORLD OF FLAVORS</p>
+          <p>There’s always room for one more conversation. For a little more flavor. For the kind of moments that stay with you long after you leave.</p>
+          <p class="story-signoff mono">GOOD FOOD.<br />GOOD COMPANY.<br />YOUR MOMENT.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="order" class="order-section dark-section" data-surface="dark" aria-labelledby="order-title">
+      <div class="order-background"><img src={posts[6].image} alt="" loading="lazy" referrerpolicy="no-referrer" /></div>
+      <div class="section-inner order-layout">
+        <div class="order-copy reveal">
+          <p class="eyebrow">// MAKE IT A MOMENT</p>
+          <h2 id="order-title" class="display section-title">YOUR TABLE<br />IS <em>WAITING.</em></h2>
+          <p>Whether it’s coffee for two or a meal with everyone, we’d love to welcome you to Zayouna.</p>
+          <a class="outline-button" href={`tel:${contact.phoneCompact}`}>CALL TO BOOK <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="printer-wrap" aria-label="Decorative reservation receipt">
+          <div class="printer-slot" aria-hidden="true"><span></span></div>
+          <div class="receipt">
+            <div class="receipt-top mono">CASPER &amp; GAMBINI’S<br /><small>ZAYOUNA / BAGHDAD</small></div>
+            <div class="receipt-rule"></div>
+            <img src={brand.logo} alt="" referrerpolicy="no-referrer" class="receipt-logo" />
+            <div class="receipt-message display">SEE YOU<br />SOON.</div>
+            <div class="receipt-rule"></div>
+            <div class="receipt-line mono"><span>YOUR NEXT VISIT</span><span>↗</span></div>
+            <div class="receipt-line mono"><span>DESTINATION</span><span>ZAYOUNA</span></div>
+            <div class="receipt-rule"></div>
+            <p class="receipt-promo mono">GOOD FOOD. GOOD COMPANY.<br />A MOMENT TO REMEMBER.</p>
+            <a href={`tel:${contact.phoneCompact}`} class="receipt-button mono">CALL TO BOOK ↗</a>
+            <div class="barcode" aria-hidden="true"></div>
+            <span class="receipt-end mono">THANK YOU FOR CHOOSING US.</span>
+          </div>
+        </div>
+        <div class="order-aside reveal"><span class="mono">01 / THE INVITATION</span><p>Come as you are. We’ll take care of the rest.</p><span class="mono">DREAM CITY MALL<br />BAGHDAD, IRAQ</span></div>
+      </div>
+    </section>
+
+    <section id="social" class="social-section light-section section-shell" data-surface="light" aria-labelledby="social-title">
+      <div class="section-inner">
+        <div class="social-heading reveal">
+          <div><p class="eyebrow">// FOLLOW THE MOMENTS</p><h2 id="social-title" class="display section-title">ON THE <em>FEED.</em></h2></div>
+          <div class="social-account"><img src={brand.logo} alt="" referrerpolicy="no-referrer" /><div><strong>@casperandgambinisirq</strong><span class="mono">87.6K FOLLOWERS · INSTAGRAM</span></div></div>
+        </div>
+        <div class="social-grid">
+          {gallery.map((post, i) => (
+            <a class="social-card reveal" href={instagramUrl} target="_blank" rel="noopener noreferrer" aria-label={`View Casper and Gambini’s Instagram: ${post.short}`}>
+              <img src={post.image} alt={post.alt} loading="lazy" referrerpolicy="no-referrer" />
+              <div class="social-overlay"><span class="mono">0{i + 1} / INSTAGRAM</span><p>{post.short}</p><span class="mono">VIEW ON INSTAGRAM ↗</span></div>
+            </a>
+          ))}
+        </div>
+        <div class="social-bottom mono"><span>REAL MOMENTS FROM OUR BAGHDAD COMMUNITY</span><a href={instagramUrl} target="_blank" rel="noopener noreferrer">FOLLOW ALONG ↗</a></div>
+      </div>
+    </section>
+
+    <section id="reviews" class="reviews-section light-section section-shell" data-surface="light" aria-labelledby="reviews-title">
+      <div class="section-inner">
+        <div class="reviews-intro reveal"><div><p class="eyebrow">// WORDS FROM OUR GUESTS</p><h2 id="reviews-title" class="display section-title">THE GOOD<br /><em>WORD.</em></h2></div><a href={mapUrl} target="_blank" rel="noopener noreferrer" class="rating-block"><span class="rating-stars" aria-hidden="true">★★★★☆</span><strong>4.2 <small>/ 5</small></strong><span class="mono">488 GOOGLE REVIEWS ↗</span></a></div>
+        <div class="review-grid">
+          {reviews.map((review) => (
+            <blockquote class="review-card reveal"><span class="mono">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)} · GOOGLE REVIEW</span><p>“{review.text}”</p><footer class="mono">— {review.author}</footer></blockquote>
+          ))}
+        </div>
+        <p class="review-disclaimer mono">REVIEWS ARE EXCERPTS FROM PUBLIC GOOGLE FEEDBACK.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer dark-section" data-surface="dark">
+    <div class="section-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <img src={brand.logo} alt="Casper & Gambini’s profile mark" referrerpolicy="no-referrer" />
+          <h2 class="display">CASPER <span>&amp;</span><br />GAMBINI’S.</h2>
+          <p>YOUR GATEWAY TO A WORLD OF FLAVORS.</p>
+        </div>
+        <nav class="footer-nav" aria-label="Footer navigation">
+          <div><h3>EXPLORE</h3><a href="#menu">THE FLAVORS</a><a href="#story">OUR STORY</a><a href="#social">INSTAGRAM</a></div>
+          <div><h3>VISIT</h3><a href="#locations">FIND US</a><a href={mapUrl} target="_blank" rel="noopener noreferrer">DIRECTIONS ↗</a><a href={`tel:${contact.phoneCompact}`}>CALL TO BOOK ↗</a></div>
+          <div><h3>FOLLOW</h3><a href={instagramUrl} target="_blank" rel="noopener noreferrer">INSTAGRAM ↗</a><a href="#reviews">GUEST REVIEWS</a></div>
+        </nav>
+      </div>
+      <div class="footer-location"><span class="eyebrow"><span class="status-dot"></span> // OUR LOCATION</span><address>DREAM CITY MALL, AL-RUBAIE INTERSECTION<br />ZAYOUNA · BAGHDAD, IRAQ</address><a href={`tel:${contact.phoneCompact}`}>{contact.phone} ↗</a></div>
+      <div class="footer-legal mono"><span>© {new Date().getFullYear()} CASPER &amp; GAMBINI’S ZAYOUNA.</span><span>MADE FOR THE MOMENTS THAT MATTER.</span><a href="#top">BACK TO TOP ↑</a></div>
+    </div>
+  </footer>
+</Layout>
